@@ -3,7 +3,7 @@
 
 <h1>IronContacts</h1>
 
-<button @click="randomContact">Add Random Contact</button>
+
   <table>
     <thead>
       <tr>
@@ -24,9 +24,10 @@
           <td>{{ contact.popularity }}</td>
           <td v-if="(contact.wonOscar===true )"><i class="fas fa-trophy"></i></td>
           <td v-if="(contact.wonEmmy===true )"><i class="fas fa-trophy"></i></td>
-          <td>  <button @click="borrarElemento(index)" type="button">
+          <td>  <button @click="deleteElement(index)" type="button">
               <i class="fa-solid fa-trash"></i></button></td>
       </tr>
+      <button @click="newRandomContact">Add Random Contact</button>
     </tbody>
   </table>
 </template>
@@ -40,23 +41,30 @@ export default {
       contactList: contacts.slice(0,5),
     };
   },
-  computed:{
-    newRandomContact(){
-      const contactLength = this.contacts.length;
-    function randomIntFromInterval(6, contactLength ) { // min and max included 
-  return Math.floor(Math.random() * (contactLenght - 6 + 1) + 6)};
 
-//    addRandomContact(){
-//     const contactLength =this.contacts.length;
-//     return Math.floor(Math.random() * contactLength);
-//    },
-// randomContact(){
-//   if(!this.contactList.includes(addRandomContact)){
-//     this.contactList.push(addRandomContact);
-//   }
-//   return randomContact;
-// }
-  }}
+  methods:{
+    deleteElement(index){
+      this.contactList.splice(index,1);
+    },
+  
+newRandomContact(){
+
+const randomContact =Math.floor(Math.random() * contacts.length);
+
+if(!this.contactList.includes(contacts[randomContact])){
+this.contactList.push(contacts[randomContact]);
+ }
+return newRandomContact;
+}
+
+  },
+ 
+    
+  //     const contactLength = this.contacts.length;
+  //   function randomIntFromInterval(6, contactLength ) { // min and max included 
+  // return Math.floor(Math.random() * (contactLenght - 6 + 1) + 6)};
+
+  
 //  methods:{
 //   contactList(contact){
 //     contactList.slice(0,5);
