@@ -1,33 +1,38 @@
 // src/App.vue
 <template>
-
-<h1>IronContacts</h1>
-
+  <h1>IronContacts</h1>
 
   <table>
     <thead>
+      <div class="botones">
+        <button @click="newRandomContact">Add Random Contact</button>
+        <button @click="popularity">Sort by popularity</button>
+        <button @click="sortedByName">Sort by name</button>
+      </div>
       <tr>
-        <th>Picture </th>
+        <th>Picture</th>
         <th>Name</th>
-        <th>Popularity </th>
+        <th>Popularity</th>
         <th>Won an Oscar</th>
-        <th>Won anEmmy</th>
+        <th>Won an Emmy</th>
         <th>Actions</th>
-        
-
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(contact, index) in contactList" :key="index" >
-        <td> <img :src="contact.pictureUrl" :alt="contact.pictureUrl" width="70"/> </td>
-         <td>{{ contact.name }}</td> 
-          <td>{{ contact.popularity }}</td>
-          <td v-if="(contact.wonOscar===true )"><i class="fas fa-trophy"></i></td>
-          <td v-if="(contact.wonEmmy===true )"><i class="fas fa-trophy"></i></td>
-          <td>  <button @click="deleteElement(index)" type="button">
-              <i class="fa-solid fa-trash"></i></button></td>
+      <tr v-for="(contact, index) in contactList" :key="index">
+        <td >
+          <img :src="contact.pictureUrl" :alt="contact.pictureUrl" width="70" />
+        </td>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.popularity }}</td>
+        <td v-if="contact.wonOscar === true"><i class="fas fa-trophy"></i></td>
+        <td v-if="contact.wonEmmy === true"><i class="fas fa-trophy"></i></td>
+        <td>
+          <button @click="deleteElement(index)" type="button">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
       </tr>
-      <button @click="newRandomContact">Add Random Contact</button>
     </tbody>
   </table>
 </template>
@@ -38,39 +43,51 @@ export default {
   data() {
     return {
       contacts: contacts,
-      contactList: contacts.slice(0,5),
+      contactList: contacts.slice(0, 5),
     };
   },
 
-  methods:{
-    deleteElement(index){
-      this.contactList.splice(index,1);
+  methods: {
+    deleteElement(index) {
+      this.contactList.splice(index, 1);
     },
-  
-newRandomContact(){
 
-const randomContact =Math.floor(Math.random() * contacts.length);
+    newRandomContact() {
+      const randomContact = Math.floor(Math.random() * contacts.length);
 
-if(!this.contactList.includes(contacts[randomContact])){
-this.contactList.push(contacts[randomContact]);
- }
-return newRandomContact;
-}
+      if (!this.contactList.includes(contacts[randomContact])) {
+        this.contactList.push(contacts[randomContact]);
+      }
+      return newRandomContact;
+    },
 
-  },
+    sortedByName() {
+    this.contactList.sort(function (a, b) {
+      if (b.name > a.name)return -1;
+      if (a.name > b.name) return 1;
+   });
+    //   console.log("eeeeeeppppaaaa" + popularity);
+    },
+    popularity(){
+      // const popular= this.contactList.popularity
+      this.contactList.sort(function (a, b) {
+return b.popularity-a.popularity;
+
+      });
+
+    }
  
-    
-  //     const contactLength = this.contacts.length;
-  //   function randomIntFromInterval(6, contactLength ) { // min and max included 
-  // return Math.floor(Math.random() * (contactLenght - 6 + 1) + 6)};
-
-  
-//  methods:{
-//   contactList(contact){
-//     contactList.slice(0,5);
-//   }
-//  }
+  },
 };
 </script>
 
-<style></style>
+<style scoped>
+/* .botones {
+  display: flex;
+  justify-content: space-around; */
+/* } */
+h1 {
+  text-align: center;
+}
+
+</style>
